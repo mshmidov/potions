@@ -8,8 +8,8 @@ import com.google.common.collect.SetMultimap;
 public enum Substance {
 
     LIFE, DEATH,
-    BODY, BODY_OPPOSITE,
-    MIND, MIND_OPPOSITE,
+    BODY, GHOST,
+    MIND, OBEDIENCE,
     CORPOREALITY, INCORPOREALITY,
     MOBILITY, IMMOBILITY,
     VIGOR, FATIGUE,
@@ -37,8 +37,8 @@ public enum Substance {
 
     public static final BiMap<Substance, Substance> OPPOSITES = ImmutableBiMap.<Substance, Substance> builder()
             .put(LIFE, DEATH)
-            .put(BODY, BODY_OPPOSITE)
-            .put(MIND, MIND_OPPOSITE)
+            .put(BODY, GHOST)
+            .put(MIND, OBEDIENCE)
             .put(CORPOREALITY, INCORPOREALITY)
             .put(MOBILITY, IMMOBILITY)
             .put(VIGOR, FATIGUE)
@@ -67,14 +67,14 @@ public enum Substance {
 
     public static final SetMultimap<Substance, Substance> FIRST_ORDER = ImmutableSetMultimap.<Substance, Substance>builder()
             .putAll(LIFE, BODY, MIND)
-            .putAll(DEATH, BODY_OPPOSITE, MIND_OPPOSITE)
+            .putAll(DEATH, GHOST, OBEDIENCE)
             .build();
 
     public static final SetMultimap<Substance, Substance> SECOND_ORDER = ImmutableSetMultimap.<Substance, Substance>builder()
             .putAll(BODY, CORPOREALITY, MOBILITY, VIGOR)
-            .putAll(BODY_OPPOSITE, INCORPOREALITY, IMMOBILITY, FATIGUE)
+            .putAll(GHOST, INCORPOREALITY, IMMOBILITY, FATIGUE)
             .putAll(MIND, EMOTIONALITY, RATIONALITY, SENSITIVITY)
-            .putAll(MIND_OPPOSITE, CALM, IRRATIONALITY, NUMBNESS)
+            .putAll(OBEDIENCE, CALM, IRRATIONALITY, NUMBNESS)
             .build();
 
     public static final SetMultimap<Substance, Substance> THIRD_ORDER = ImmutableSetMultimap.<Substance, Substance>builder()
@@ -92,6 +92,13 @@ public enum Substance {
             .putAll(NUMBNESS, DISTRACTION, ABANDON, DISREGARD)
             .build();
 
+    public static final SetMultimap<Integer, Substance> SUBSTANCE_ORDER =ImmutableSetMultimap.<Integer, Substance>builder()
+            .putAll(4, THIRD_ORDER.values())
+            .putAll(3, THIRD_ORDER.keySet())
+            .putAll(2, SECOND_ORDER.keySet())
+            .putAll(1, FIRST_ORDER.keySet())
+            .build();
+
     public Substance getOpposite() {
         if (OPPOSITES.containsKey(this)) {
             return OPPOSITES.get(this);
@@ -100,4 +107,10 @@ public enum Substance {
         }
     }
 
+    public int getOrder() {
+       return SUBSTANCE_ORDER.keys().stream()
+               .filter(order -> SUBSTANCE_ORDER.get(order).contains(this))
+               .findFirst()
+               .orElseThrow(() -> new IllegalStateException("Cannot find order for substance " + this));
+    }
 }
