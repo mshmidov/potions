@@ -63,9 +63,9 @@ public class Potion {
         performSynthesis(effects, Substance.SECOND_ORDER, Rules.SYNTHESIS_THIRD_ORDER_COUNT);
         performSynthesis(effects, Substance.FIRST_ORDER, Rules.SYNTHESIS_SECOND_ORDER_COUNT);
 
-        if (effects.size() > Rules.MAX_EFFECTS) {
+        if ((effects.size() - base.map(Potion::getEffects).map(Table::size).orElse(0)) > Rules.MAX_EFFECTS) {
             sideEffects.putAll(effects);
-            sideEffects.clear();
+            effects.clear();
 
             System.out.printf("too much effects in potion; everything is converted to side effects%n");
         }
