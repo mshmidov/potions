@@ -41,8 +41,7 @@ public class Potion {
                 .orElse(0);
 
         if (maxConcentration >= Rules.MINIMAL_EFFECT_STRENGTH
-                && maxConcentration >= secondMaxConcentration * Rules.MINIMAL_EFFECT_RATIO
-                && substances.values().stream().filter(i -> i == maxConcentration).count() <= Rules.MAX_EFFECTS) {
+                && maxConcentration >= secondMaxConcentration * Rules.MINIMAL_EFFECT_RATIO) {
 
             substances.forEach((substance, quantity) -> {
                 if (quantity == maxConcentration) {
@@ -63,6 +62,13 @@ public class Potion {
         performSynthesis(effects, Substance.THIRD_ORDER, Rules.SYNTHESIS_FOURTH_ORDER_COUNT);
         performSynthesis(effects, Substance.SECOND_ORDER, Rules.SYNTHESIS_THIRD_ORDER_COUNT);
         performSynthesis(effects, Substance.FIRST_ORDER, Rules.SYNTHESIS_SECOND_ORDER_COUNT);
+
+        if (effects.size() > Rules.MAX_EFFECTS) {
+            sideEffects.putAll(effects);
+            sideEffects.clear();
+
+            System.out.printf("too much effects in potion; everything is converted to side effects%n");
+        }
 
         return new Potion(recipe, effects, sideEffects);
     }
@@ -85,7 +91,7 @@ public class Potion {
                             .map(s -> effects.remove(verb, s))
                             .min(Integer::compareTo).orElse(0);
 
-                    effects.put(verb, higherSubstance, minimalQuantity);
+                    effects.put(verb, higherSubstance, minimalQuantity + Optional.ofNullable(effects.get(verb, higherSubstance)).orElse(0));
                     System.out.println("Synthesis of " + lowerSubstances + " into " + higherSubstance);
                 }
 
