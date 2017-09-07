@@ -4,15 +4,26 @@ import java.util.ArrayDeque;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-
-import static java.util.stream.Collectors.joining;
+import com.google.common.collect.ImmutableMultiset;
+import com.google.common.collect.Multiset;
+import com.mshmidov.potions.ingredent.IngredientDefinition;
+import com.mshmidov.potions.output.ComplexRecipeText;
+import com.mshmidov.potions.output.RecipeText;
 
 public final class ComplexRecipe implements Brewable {
 
+    private final String name;
+
     private final List<Recipe> recipes;
 
-    public ComplexRecipe(Recipe... recipes) {
+    public ComplexRecipe(String name, Recipe... recipes) {
+        this.name = name;
         this.recipes = ImmutableList.copyOf(recipes);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     public List<Recipe> getRecipes() {
@@ -35,7 +46,17 @@ public final class ComplexRecipe implements Brewable {
     }
 
     @Override
-    public String toString() {
-        return recipes.stream().map(r -> r.toInstructions()).collect(joining(System.getProperty("line.separator")));
+    public Multiset<IngredientDefinition> getAllIngredients() {
+        final ImmutableMultiset.Builder<IngredientDefinition> result = ImmutableMultiset.<IngredientDefinition> builder();
+
+        recipes.forEach(recipe -> recipe.getAllIngredients().forEachEntry((ingredient, count) -> result.addCopies(ingredient, count)));
+
+        return result.build();
     }
+
+    @Override
+    public RecipeText asText() {
+        return new ComplexRecipeText(this);
+    }
+
 }

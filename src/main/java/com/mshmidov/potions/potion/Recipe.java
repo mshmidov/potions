@@ -1,20 +1,20 @@
 package com.mshmidov.potions.potion;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.LinkedHashMultiset;
+import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Multiset;
 import com.mshmidov.potions.definition.Verb;
 import com.mshmidov.potions.ingredent.IngredientDefinition;
+import com.mshmidov.potions.output.RecipeText;
+import com.mshmidov.potions.output.SimpleRecipeText;
 import com.mshmidov.potions.process.Brewing;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
-import static org.apache.commons.lang3.StringUtils.capitalize;
 
 public class Recipe implements Brewable {
 
@@ -37,6 +37,7 @@ public class Recipe implements Brewable {
         return new Builder(verb);
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -49,6 +50,11 @@ public class Recipe implements Brewable {
         checkArgument(round < finalRound, "Recipe ends on round %s", finalRound);
 
         return ingredients.get(round);
+    }
+
+    @Override
+    public Multiset<IngredientDefinition> getAllIngredients() {
+        return ImmutableMultiset.copyOf(ingredients.values());
     }
 
     public int getFinalRound() {
@@ -65,48 +71,8 @@ public class Recipe implements Brewable {
     }
 
     @Override
-    public String toString() {
-        return String.format("%s%n", name) + toInstructions();
-    }
-
-    public String toInstructions() {
-        final StringBuilder result = new StringBuilder();
-
-        result.append(String.format("Состав:%n"));
-
-        final LinkedHashMultiset<IngredientDefinition> allIngredients = LinkedHashMultiset.create(ingredients.values());
-        allIngredients.forEachEntry((ingredient, count) -> {
-            result.append(String.format("%s, %s.%n", ingredient.getName().toLowerCase(), count > 1 ? count + " порции" : "1 порция"));
-        });
-
-        result.append(String.format("%n"));
-        result.append(String.format("Приготовление:%n"));
-
-        if (verb.isHeating()) {
-            result.append(String.format("Добавить порцию воды в котёл и поставить на огонь. Не допускать закипания.%n"));
-        } else {
-            result.append(String.format("Добавить порцию воды в котёл и довести до кипения. Снять с огня.%n"));
-        }
-
-        IntStream.range(1, finalRound).forEach(round -> {
-
-            final LinkedHashMultiset<IngredientDefinition> toAdd = LinkedHashMultiset.create(ingredients.get(round));
-
-            toAdd.forEachEntry((ingredient, count) -> {
-                result.append(String.format("Добавить %s%s.%n", count > 1 ? count + " порции " : "", ingredient.getName().toLowerCase()));
-            });
-
-            result.append(String.format("%s.%n", capitalize(Joiner.on(" и ").skipNulls().join(
-                    verb.isHydration() ? "добавить чайную ложку воды" : null,
-                    verb.isAeration() ? "бурно перемешать" : "перемешать"))));
-
-        });
-
-        result.append(String.format("%s.%n", capitalize(Joiner.on(" и ").skipNulls().join(
-                verb.isHeating() ? "довести до кипения" : null,
-                "отфильтровать"))));
-
-        return result.toString();
+    public RecipeText asText() {
+        return new SimpleRecipeText(this);
     }
 
     public static final class Builder {
@@ -168,5 +134,4 @@ public class Recipe implements Brewable {
         }
 
     }
-
 }
