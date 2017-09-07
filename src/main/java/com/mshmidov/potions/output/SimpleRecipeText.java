@@ -28,7 +28,7 @@ public final class SimpleRecipeText implements RecipeText {
         final List<String> result = new ArrayList<>();
 
         recipe.getAllIngredients().forEachEntry((ingredient, count) -> {
-            result.add(String.format("%s, %s.%n", ingredient.getName().toLowerCase(), count > 1 ? count + " порции" : "1 порция"));
+            result.add(String.format("%s, %s.", ingredient.getName().toLowerCase(), count > 1 ? count + " порции" : "1 порция"));
         });
 
         return result;
@@ -39,24 +39,24 @@ public final class SimpleRecipeText implements RecipeText {
         final List<String> result = new ArrayList<>();
 
         if (recipe.getVerb().isHeating()) {
-            result.add(String.format("Добавить порцию воды в котёл и поставить на огонь. Не допускать закипания.%n"));
+            result.add("Добавить порцию воды в котёл и поставить на огонь. Не допускать закипания.");
         } else {
-            result.add(String.format("Добавить порцию воды в котёл и довести до кипения. Снять с огня.%n"));
+            result.add("Добавить порцию воды в котёл и довести до кипения. Снять с огня.");
         }
 
         IntStream.range(1, recipe.getFinalRound()).forEach(round -> {
 
             ImmutableMultiset.copyOf(recipe.getIngredients(round)).forEachEntry((ingredient, count) -> {
-                result.add(String.format("Добавить %s%s.%n", count > 1 ? count + " порции " : "", ingredient.getName().toLowerCase()));
+                result.add(String.format("Добавить %s%s.", count > 1 ? count + " порции " : "", ingredient.getName().toLowerCase()));
             });
 
-            result.add(String.format("%s.%n", capitalize(Joiner.on(" и ").skipNulls().join(
+            result.add(String.format("%s.", capitalize(Joiner.on(" и ").skipNulls().join(
                     recipe.getVerb().isHydration() ? "добавить чайную ложку воды" : null,
                     recipe.getVerb().isAeration() ? "бурно перемешать" : "перемешать"))));
 
         });
 
-        result.add(String.format("%s.%n", capitalize(Joiner.on(" и ").skipNulls().join(
+        result.add(String.format("%s.", capitalize(Joiner.on(" и ").skipNulls().join(
                 recipe.getVerb().isHeating() ? "довести до кипения" : null,
                 "отфильтровать"))));
 

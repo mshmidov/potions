@@ -14,6 +14,7 @@ import com.mshmidov.potions.definition.EffectScale;
 import com.mshmidov.potions.definition.Rules;
 import com.mshmidov.potions.definition.Substance;
 import com.mshmidov.potions.definition.Verb;
+import com.mshmidov.potions.output.PotionText;
 
 import static java.util.stream.Collectors.joining;
 import static org.apache.commons.lang3.StringUtils.capitalize;
@@ -154,4 +155,7 @@ public class Potion {
         return result.toString();
     }
 
+    public PotionText asText() {
+        return new PotionText(this);
+    }
 }

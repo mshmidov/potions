@@ -28,7 +28,7 @@ public final class ComplexRecipeText implements RecipeText {
         final List<String> result = new ArrayList<>();
 
         recipe.getAllIngredients().forEachEntry((ingredient, count) -> {
-            result.add(String.format("%s, %s.%n", ingredient.getName().toLowerCase(), count > 1 ? count + " порции" : "1 порция"));
+            result.add(String.format("%s, %s.", ingredient.getName().toLowerCase(), count > 1 ? count + " порции" : "1 порция"));
         });
 
         return result;
