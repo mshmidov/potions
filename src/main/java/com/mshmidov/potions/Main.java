@@ -13,8 +13,10 @@ public class Main {
 
         final Brewable recipe = KnownRecipe.VIGOR_POTION;
 
-        final Potion potion = recipe.brew();
+        printRecipe(recipe.brew());
+    }
 
+    private static void printRecipe(final Potion potion) {
         final PotionText potionText = potion.asText();
         System.out.println();
         System.out.println(potionText.getName());
@@ -23,7 +25,7 @@ public class Main {
         System.out.print("Побочные эффекты: ");
         System.out.println(potionText.getSideEffects().stream().collect(joining("; ")));
 
-        final RecipeText recipeText = recipe.asText();
+        final RecipeText recipeText = potion.getRecipe().asText();
         System.out.println();
         System.out.println("Ингредиенты");
         recipeText.getIngredients().forEach(System.out::println);
