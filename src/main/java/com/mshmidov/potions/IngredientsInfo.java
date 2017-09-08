@@ -12,7 +12,7 @@ import com.mshmidov.potions.definition.Substance;
 import com.mshmidov.potions.ingredent.Ingredient;
 import com.mshmidov.potions.ingredent.IngredientDefinition;
 import com.mshmidov.potions.output.TableOutput;
-import com.mshmidov.potions.potion.Brewable;
+import com.mshmidov.potions.potion.Recipe;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -23,7 +23,7 @@ public class IngredientsInfo {
 
         final Multiset<IngredientDefinition> ingredientUsages = HashMultiset.create();
 
-        for (Brewable recipe : KnownRecipe.values()) {
+        for (Recipe recipe : KnownRecipe.values()) {
             recipe.getAllIngredients().forEachEntry((ingredient, count) -> ingredientUsages.add(ingredient, count));
         }
 

@@ -10,7 +10,7 @@ import com.mshmidov.potions.ingredent.IngredientDefinition;
 import com.mshmidov.potions.output.ComplexRecipeText;
 import com.mshmidov.potions.output.RecipeText;
 
-public final class ComplexRecipe implements Brewable {
+public final class ComplexRecipe implements Recipe {
 
     private final String name;
 

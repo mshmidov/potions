@@ -16,7 +16,7 @@ import com.mshmidov.potions.process.Brewing;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-public class SimpleRecipe implements Brewable {
+public class SimpleRecipe implements Recipe {
 
     private final String name;
 

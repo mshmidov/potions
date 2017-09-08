@@ -5,12 +5,12 @@ import com.mshmidov.potions.definition.Verb;
 import com.mshmidov.potions.ingredent.Ingredient;
 import com.mshmidov.potions.ingredent.IngredientDefinition;
 import com.mshmidov.potions.output.RecipeText;
-import com.mshmidov.potions.potion.Brewable;
+import com.mshmidov.potions.potion.Recipe;
 import com.mshmidov.potions.potion.ComplexRecipe;
 import com.mshmidov.potions.potion.Potion;
 import com.mshmidov.potions.potion.SimpleRecipe;
 
-public enum KnownRecipe implements Brewable {
+public enum KnownRecipe implements Recipe {
 
     SLEEPING_DRAUGHT(SimpleRecipe.forVerb(Verb.INDUCE)
             .named("Сонное зелье")
@@ -82,9 +82,9 @@ public enum KnownRecipe implements Brewable {
                     .onRound(2).add(Ingredient.SOPOPHORA_BEAN.asIs(), Ingredient.SNAKE_EYE.asIs())
                     .onRound(4).finish()));
 
-    private final Brewable recipe;
+    private final Recipe recipe;
 
-    private KnownRecipe(Brewable recipe) {
+    private KnownRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
 

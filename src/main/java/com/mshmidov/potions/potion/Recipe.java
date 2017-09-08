@@ -4,7 +4,7 @@ import com.google.common.collect.Multiset;
 import com.mshmidov.potions.ingredent.IngredientDefinition;
 import com.mshmidov.potions.output.RecipeText;
 
-public interface Brewable {
+public interface Recipe {
 
     String getName();
 
