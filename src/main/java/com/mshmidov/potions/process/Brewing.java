@@ -5,6 +5,7 @@ import java.util.stream.IntStream;
 
 import com.mshmidov.potions.ingredent.Ingredient;
 import com.mshmidov.potions.potion.Potion;
+import com.mshmidov.potions.potion.SimplePotion;
 import com.mshmidov.potions.potion.SimpleRecipe;
 
 public class Brewing {
@@ -21,10 +22,10 @@ public class Brewing {
       return proceedOnBaseOf(null);
     }
 
-    public Potion proceedOnBaseOf(Potion base) {
+    public SimplePotion proceedOnBaseOf(SimplePotion base) {
         System.out.printf("Opposing elements: %s%n", recipe.getVerb().oppositeElements());
         IntStream.range(1, recipe.getFinalRound()).forEach(this::calculateRound);
-        return Potion.create(recipe, Optional.ofNullable(base), cauldron.getSubstances());
+        return SimplePotion.create(recipe, Optional.ofNullable(base), cauldron.getSubstances());
     }
 
     private void calculateRound(int round) {

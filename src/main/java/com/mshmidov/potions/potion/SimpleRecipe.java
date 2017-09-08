@@ -66,7 +66,7 @@ public class SimpleRecipe implements Recipe {
         return new Brewing(this).proceed();
     }
 
-    public Potion brewOnBaseOf(Potion base) {
+    public SimplePotion brewOnBaseOf(SimplePotion base) {
         return new Brewing(this).proceedOnBaseOf(base);
     }
 

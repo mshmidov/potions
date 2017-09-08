@@ -39,7 +39,7 @@ public final class ComplexRecipe implements Recipe {
     public Potion brew() {
 
         final ArrayDeque<SimpleRecipe> unbrewedRecipes = new ArrayDeque<>(recipes);
-        Potion potion = null;
+        SimplePotion potion = null;
 
         while (!unbrewedRecipes.isEmpty()) {
             SimpleRecipe recipe = unbrewedRecipes.removeFirst();
@@ -47,7 +47,7 @@ public final class ComplexRecipe implements Recipe {
             potion = recipe.brewOnBaseOf(potion);
         }
 
-        return potion;
+        return new ComplexPotion(this, potion);
     }
 
     @Override
