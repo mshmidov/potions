@@ -6,15 +6,15 @@ import java.util.stream.IntStream;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMultiset;
-import com.mshmidov.potions.potion.Recipe;
+import com.mshmidov.potions.potion.SimpleRecipe;
 
 import static org.apache.commons.lang3.StringUtils.capitalize;
 
 public final class SimpleRecipeText implements RecipeText {
 
-    private final Recipe recipe;
+    private final SimpleRecipe recipe;
 
-    public SimpleRecipeText(Recipe recipe) {
+    public SimpleRecipeText(SimpleRecipe recipe) {
         this.recipe = recipe;
     }
 

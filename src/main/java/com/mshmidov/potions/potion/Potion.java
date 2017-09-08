@@ -21,13 +21,13 @@ import static org.apache.commons.lang3.StringUtils.capitalize;
 
 public class Potion {
 
-    private final Recipe recipe;
+    private final SimpleRecipe recipe;
 
     private final Table<Verb, Substance, Integer> effects;
 
     private final Table<Verb, Substance, Integer> sideEffects;
 
-    public static Potion create(Recipe recipe, Optional<Potion> base, Map<Substance, Integer> substances) {
+    public static Potion create(SimpleRecipe recipe, Optional<Potion> base, Map<Substance, Integer> substances) {
 
         final Table<Verb, Substance, Integer> effects = HashBasedTable.create();
         final Table<Verb, Substance, Integer> sideEffects = HashBasedTable.create();
@@ -100,13 +100,13 @@ public class Potion {
         });
     }
 
-    private Potion(Recipe recipe, Table<Verb, Substance, Integer> effects, Table<Verb, Substance, Integer> sideEffects) {
+    private Potion(SimpleRecipe recipe, Table<Verb, Substance, Integer> effects, Table<Verb, Substance, Integer> sideEffects) {
         this.recipe = recipe;
         this.effects = ImmutableTable.copyOf(effects);
         this.sideEffects = ImmutableTable.copyOf(sideEffects);
     }
 
-    public Recipe getRecipe() {
+    public SimpleRecipe getRecipe() {
         return recipe;
     }
 

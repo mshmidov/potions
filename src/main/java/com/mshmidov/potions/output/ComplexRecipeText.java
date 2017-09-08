@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mshmidov.potions.potion.ComplexRecipe;
-import com.mshmidov.potions.potion.Recipe;
+import com.mshmidov.potions.potion.SimpleRecipe;
 import com.mshmidov.potions.utils.MoreStreams;
 import com.mshmidov.potions.utils.Pair;
 
@@ -37,7 +37,7 @@ public final class ComplexRecipeText implements RecipeText {
     @Override
     public List<String> getInstructions() {
         return MoreStreams.indexed(recipe.getRecipes())
-                .map(p -> p.mapRight(Recipe::asText))
+                .map(p -> p.mapRight(SimpleRecipe::asText))
                 .map(p -> p.mapRight(RecipeText::getInstructions))
                 .map(p -> p.mapRight((i, insructions) -> {
                     if (i > 0) {

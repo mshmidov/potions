@@ -5,15 +5,15 @@ import java.util.stream.IntStream;
 
 import com.mshmidov.potions.ingredent.IngredientDefinition;
 import com.mshmidov.potions.potion.Potion;
-import com.mshmidov.potions.potion.Recipe;
+import com.mshmidov.potions.potion.SimpleRecipe;
 
 public class Brewing {
 
-    private final Recipe recipe;
+    private final SimpleRecipe recipe;
 
     private final Cauldron cauldron = new Cauldron();
 
-    public Brewing(Recipe recipe) {
+    public Brewing(SimpleRecipe recipe) {
         this.recipe = recipe;
     }
 

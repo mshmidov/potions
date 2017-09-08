@@ -16,7 +16,7 @@ import com.mshmidov.potions.process.Brewing;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
-public class Recipe implements Brewable {
+public class SimpleRecipe implements Brewable {
 
     private final String name;
 
@@ -26,7 +26,7 @@ public class Recipe implements Brewable {
 
     private final int finalRound;
 
-    private Recipe(Builder builder) {
+    private SimpleRecipe(Builder builder) {
         this.name = builder.name;
         this.verb = builder.verb;
         this.ingredients = ImmutableListMultimap.copyOf(builder.ingredients);
@@ -47,7 +47,7 @@ public class Recipe implements Brewable {
     }
 
     public List<IngredientDefinition> getIngredients(int round) {
-        checkArgument(round < finalRound, "Recipe ends on round %s", finalRound);
+        checkArgument(round < finalRound, "SimpleRecipe ends on round %s", finalRound);
 
         return ingredients.get(round);
     }
@@ -98,14 +98,14 @@ public class Recipe implements Brewable {
             return new RoundBuilder(round);
         }
 
-        private Recipe build() {
+        private SimpleRecipe build() {
             checkState(ingredients.keySet().stream().noneMatch(i -> i >= finalRound),
                     "Ingredients cannot be added on final round or after that.");
 
             checkState(ingredients.keySet().stream().map(ingredients::get).map(List::size).noneMatch(n -> n > 2),
                     "No more than two ingredients can be added on single round");
 
-            return new Recipe(this);
+            return new SimpleRecipe(this);
         }
 
         public final class RoundBuilder {
@@ -127,7 +127,7 @@ public class Recipe implements Brewable {
                 return Builder.this;
             }
 
-            public Recipe finish() {
+            public SimpleRecipe finish() {
                 Builder.this.finalRound = round;
                 return Builder.this.build();
             }

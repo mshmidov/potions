@@ -14,9 +14,9 @@ public final class ComplexRecipe implements Brewable {
 
     private final String name;
 
-    private final List<Recipe> recipes;
+    private final List<SimpleRecipe> recipes;
 
-    public ComplexRecipe(String name, Recipe... recipes) {
+    public ComplexRecipe(String name, SimpleRecipe... recipes) {
         this.name = name;
         this.recipes = ImmutableList.copyOf(recipes);
     }
@@ -26,18 +26,18 @@ public final class ComplexRecipe implements Brewable {
         return name;
     }
 
-    public List<Recipe> getRecipes() {
+    public List<SimpleRecipe> getRecipes() {
         return recipes;
     }
 
     @Override
     public Potion brew() {
 
-        final ArrayDeque<Recipe> unbrewedRecipes = new ArrayDeque<>(recipes);
+        final ArrayDeque<SimpleRecipe> unbrewedRecipes = new ArrayDeque<>(recipes);
         Potion potion = null;
 
         while (!unbrewedRecipes.isEmpty()) {
-            Recipe recipe = unbrewedRecipes.removeFirst();
+            SimpleRecipe recipe = unbrewedRecipes.removeFirst();
 
             potion = recipe.brewOnBaseOf(potion);
         }
