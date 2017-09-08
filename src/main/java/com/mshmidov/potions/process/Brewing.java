@@ -3,10 +3,13 @@ package com.mshmidov.potions.process;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import com.mshmidov.potions.definition.Element;
 import com.mshmidov.potions.ingredent.Ingredient;
 import com.mshmidov.potions.potion.Potion;
 import com.mshmidov.potions.potion.SimplePotion;
 import com.mshmidov.potions.potion.SimpleRecipe;
+
+import static java.util.stream.Collectors.toSet;
 
 public class Brewing {
 
@@ -23,7 +26,8 @@ public class Brewing {
     }
 
     public SimplePotion proceedOnBaseOf(SimplePotion base) {
-        System.out.printf("Opposing elements: %s%n", recipe.getVerb().oppositeElements());
+        System.out.printf("Opposing elements: %s%n",
+                recipe.getVerb().oppositeElements().stream().filter(e -> e != Element.AIR).collect(toSet()));
         IntStream.range(1, recipe.getFinalRound()).forEach(this::calculateRound);
         return SimplePotion.create(recipe, Optional.ofNullable(base), cauldron.getSubstances());
     }
