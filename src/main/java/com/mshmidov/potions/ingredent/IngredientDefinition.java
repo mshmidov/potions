@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.stream.Collectors.joining;
 
-final class IngredientDefinition implements Ingredient {
+public final class IngredientDefinition implements Ingredient {
 
     private final String name;
 
