@@ -1,6 +1,7 @@
 package com.mshmidov.potions.potion;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
@@ -16,9 +17,13 @@ public final class ComplexRecipe implements Recipe {
 
     private final List<SimpleRecipe> recipes;
 
-    public ComplexRecipe(String name, SimpleRecipe... recipes) {
-        this.name = name;
-        this.recipes = ImmutableList.copyOf(recipes);
+    public static Builder named(String name) {
+        return new Builder(name);
+    }
+
+    private ComplexRecipe(Builder builder) {
+        this.name = builder.name;
+        this.recipes = ImmutableList.copyOf(builder.recipes);
     }
 
     @Override
@@ -59,4 +64,24 @@ public final class ComplexRecipe implements Recipe {
         return new ComplexRecipeText(this);
     }
 
+    public static final class Builder {
+
+        private final String name;
+
+        private final List<SimpleRecipe> recipes = new ArrayList<>();
+
+        private Builder(String name) {
+            this.name = name;
+        }
+
+        public Builder with(SimpleRecipe recipe) {
+            recipes.add(recipe);
+            return this;
+        }
+
+        public ComplexRecipe finish() {
+            return new ComplexRecipe(this);
+        }
+
+    }
 }
