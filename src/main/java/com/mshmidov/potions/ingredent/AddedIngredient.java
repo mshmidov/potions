@@ -17,7 +17,7 @@ public class AddedIngredient {
 
     private final Map<Substance, Integer> substances = new HashMap<>();
 
-    AddedIngredient(IngredientDefinition ingredient) {
+    AddedIngredient(Ingredient ingredient) {
         this.name = ingredient.getName();
         this.element = ingredient.getElement();
         this.substances.putAll(ingredient.getSubstances());

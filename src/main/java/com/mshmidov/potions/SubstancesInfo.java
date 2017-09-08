@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.mshmidov.potions.definition.Substance;
 import com.mshmidov.potions.ingredent.Ingredient;
-import com.mshmidov.potions.ingredent.IngredientDefinition;
+import com.mshmidov.potions.ingredent.KnownIngredient;
 import com.mshmidov.potions.output.TableOutput;
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,8 +34,7 @@ public class SubstancesInfo {
 
         final Multimap<Substance, Integer> usedSubstances = ArrayListMultimap.create();
 
-        Arrays.stream(Ingredient.values())
-                .map(Ingredient::asIs)
+        Arrays.stream(KnownIngredient.values())
                 .flatMap(i -> i.getSubstances().entrySet().stream())
                 .forEach(e -> usedSubstances.put(e.getKey(), e.getValue()));
 
@@ -71,9 +70,8 @@ public class SubstancesInfo {
                 ImmutableList.of("Ingredients by element:"),
                 ImmutableList.of("-----------------------")));
 
-        final List<List<String>> elementsOutput = Arrays.stream(Ingredient.values())
-                .map(Ingredient::asIs)
-                .collect(groupingBy(IngredientDefinition::getElement))
+        final List<List<String>> elementsOutput = Arrays.stream(KnownIngredient.values())
+                .collect(groupingBy(Ingredient::getElement))
                 .entrySet().stream()
                 .map(e -> ImmutableList.of(e.getKey().name() + ":", String.valueOf(e.getValue().size())))
                 .collect(toList());

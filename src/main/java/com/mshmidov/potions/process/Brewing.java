@@ -3,7 +3,7 @@ package com.mshmidov.potions.process;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import com.mshmidov.potions.ingredent.IngredientDefinition;
+import com.mshmidov.potions.ingredent.Ingredient;
 import com.mshmidov.potions.potion.Potion;
 import com.mshmidov.potions.potion.SimpleRecipe;
 
@@ -37,7 +37,7 @@ public class Brewing {
         // adding ingredients
 
         recipe.getIngredients(round).stream()
-                .map(IngredientDefinition::mutableCopy)
+                .map(Ingredient::mutableCopy)
                 .peek(cauldron::addIngredient)
                 .forEach(ingredient -> {
                     if (recipe.getVerb().oppositeElements().contains(ingredient.getElement())) {

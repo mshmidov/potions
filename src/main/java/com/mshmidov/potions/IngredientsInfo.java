@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.mshmidov.potions.definition.Substance;
 import com.mshmidov.potions.ingredent.Ingredient;
-import com.mshmidov.potions.ingredent.IngredientDefinition;
+import com.mshmidov.potions.ingredent.KnownIngredient;
 import com.mshmidov.potions.output.TableOutput;
 import com.mshmidov.potions.potion.Recipe;
 
@@ -21,14 +21,13 @@ public class IngredientsInfo {
 
     public static void main(String[] args) {
 
-        final Multiset<IngredientDefinition> ingredientUsages = HashMultiset.create();
+        final Multiset<Ingredient> ingredientUsages = HashMultiset.create();
 
         for (Recipe recipe : KnownRecipe.values()) {
             recipe.getAllIngredients().forEachEntry((ingredient, count) -> ingredientUsages.add(ingredient, count));
         }
 
-        final List<List<String>> rows = Arrays.stream(Ingredient.values())
-                .map(Ingredient::asIs)
+        final List<List<String>> rows = Arrays.stream(KnownIngredient.values())
                 .map(i -> new IngredientStats(i.getName(), i.getSubstances(), ingredientUsages.count(i)))
                 .sorted(Comparator.comparing(IngredientStats::getUsages).reversed())
                 .map(IngredientStats::toColumns)

@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.stream.Collectors.joining;
 
-public final class IngredientDefinition {
+final class IngredientDefinition implements Ingredient {
 
     private final String name;
 
@@ -38,22 +38,27 @@ public final class IngredientDefinition {
         return new Builder(Element.EARTH, name);
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public Element getElement() {
         return element;
     }
 
+    @Override
     public Map<Substance, Integer> getSubstances() {
         return substances;
     }
 
+    @Override
     public AddedIngredient mutableCopy() {
         return new AddedIngredient(this);
     }
 
+    @Override
     public IngredientDefinition toFire() {
         checkState(element != Element.FIRE, "IngredientDefinition is already of fire");
 
@@ -72,7 +77,8 @@ public final class IngredientDefinition {
         return IngredientDefinition.ofFire(newName).containing(substances).build();
     }
 
-    public IngredientDefinition toWater() {
+    @Override
+    public Ingredient toWater() {
         checkState(element != Element.WATER, "IngredientDefinition is already of water");
 
         final String newName;
@@ -90,7 +96,8 @@ public final class IngredientDefinition {
         return IngredientDefinition.ofWater(newName).containing(substances).build();
     }
 
-    public IngredientDefinition toEarth() {
+    @Override
+    public Ingredient toEarth() {
         checkState(element != Element.EARTH, "IngredientDefinition is already of earth");
 
         final String newName;

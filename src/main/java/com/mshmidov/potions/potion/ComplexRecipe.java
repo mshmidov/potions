@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Multiset;
-import com.mshmidov.potions.ingredent.IngredientDefinition;
+import com.mshmidov.potions.ingredent.Ingredient;
 import com.mshmidov.potions.output.ComplexRecipeText;
 import com.mshmidov.potions.output.RecipeText;
 
@@ -51,8 +51,8 @@ public final class ComplexRecipe implements Recipe {
     }
 
     @Override
-    public Multiset<IngredientDefinition> getAllIngredients() {
-        final ImmutableMultiset.Builder<IngredientDefinition> result = ImmutableMultiset.<IngredientDefinition> builder();
+    public Multiset<Ingredient> getAllIngredients() {
+        final ImmutableMultiset.Builder<Ingredient> result = ImmutableMultiset.<Ingredient> builder();
 
         recipes.forEach(recipe -> recipe.getAllIngredients().forEachEntry((ingredient, count) -> result.addCopies(ingredient, count)));
 

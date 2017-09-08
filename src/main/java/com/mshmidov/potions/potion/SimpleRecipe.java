@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multiset;
 import com.mshmidov.potions.definition.Verb;
-import com.mshmidov.potions.ingredent.IngredientDefinition;
+import com.mshmidov.potions.ingredent.Ingredient;
 import com.mshmidov.potions.output.RecipeText;
 import com.mshmidov.potions.output.SimpleRecipeText;
 import com.mshmidov.potions.process.Brewing;
@@ -22,7 +22,7 @@ public class SimpleRecipe implements Recipe {
 
     private final Verb verb;
 
-    private final ListMultimap<Integer, IngredientDefinition> ingredients;
+    private final ListMultimap<Integer, Ingredient> ingredients;
 
     private final int finalRound;
 
@@ -46,14 +46,14 @@ public class SimpleRecipe implements Recipe {
         return verb;
     }
 
-    public List<IngredientDefinition> getIngredients(int round) {
+    public List<Ingredient> getIngredients(int round) {
         checkArgument(round < finalRound, "SimpleRecipe ends on round %s", finalRound);
 
         return ingredients.get(round);
     }
 
     @Override
-    public Multiset<IngredientDefinition> getAllIngredients() {
+    public Multiset<Ingredient> getAllIngredients() {
         return ImmutableMultiset.copyOf(ingredients.values());
     }
 
@@ -79,7 +79,7 @@ public class SimpleRecipe implements Recipe {
 
         private final Verb verb;
 
-        private final ListMultimap<Integer, IngredientDefinition> ingredients = ArrayListMultimap.create();
+        private final ListMultimap<Integer, Ingredient> ingredients = ArrayListMultimap.create();
 
         private String name = "";
 
@@ -116,12 +116,18 @@ public class SimpleRecipe implements Recipe {
                 this.round = round;
             }
 
-            public Builder add(IngredientDefinition ingredient) {
+            public Builder add(Ingredient ingredient) {
                 Builder.this.ingredients.put(round, ingredient);
                 return Builder.this;
             }
 
-            public Builder add(IngredientDefinition ingredient1, IngredientDefinition ingredient2) {
+            public Builder addTwo(Ingredient ingredient) {
+                Builder.this.ingredients.put(round, ingredient);
+                Builder.this.ingredients.put(round, ingredient);
+                return Builder.this;
+            }
+
+            public Builder add(Ingredient ingredient1, Ingredient ingredient2) {
                 Builder.this.ingredients.put(round, ingredient1);
                 Builder.this.ingredients.put(round, ingredient2);
                 return Builder.this;

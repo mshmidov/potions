@@ -1,7 +1,7 @@
 package com.mshmidov.potions.potion;
 
 import com.google.common.collect.Multiset;
-import com.mshmidov.potions.ingredent.IngredientDefinition;
+import com.mshmidov.potions.ingredent.Ingredient;
 import com.mshmidov.potions.output.RecipeText;
 
 public interface Recipe {
@@ -10,7 +10,7 @@ public interface Recipe {
 
     Potion brew();
 
-    Multiset<IngredientDefinition> getAllIngredients();
+    Multiset<Ingredient> getAllIngredients();
 
     RecipeText asText();
 }
