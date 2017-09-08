@@ -251,8 +251,22 @@ public enum KnownIngredient implements Ingredient {
     ROMAN_SNAIL(IngredientDefinition.ofEarth("Виноградная улитка")
             .containing(Substance.DISTRACTION, 2)
             .containing(Substance.SLOWNESS, 1)
-            .build())
+            .build()),
 
+    POND_TURTLE_TAIL(IngredientDefinition.ofEarth("Хвост болотной черепахи")
+            .containing(Substance.CLUMSINESS, 2)
+            .containing(Substance.SPEED, 1)
+            .build()),
+
+    FAIRY_WINGS(IngredientDefinition.ofFire("Крылья фей")
+            .containing(Substance.TININESS, 1)
+            .containing(Substance.FINESSE, 2)
+            .build()),
+
+    PINE_BUD(IngredientDefinition.ofWater("Сосновая почка")
+            .containing(Substance.AGE, 2)
+            .containing(Substance.BULK, 1)
+            .build())
     ;
 
     private final IngredientDefinition definition;

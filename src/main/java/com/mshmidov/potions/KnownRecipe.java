@@ -84,7 +84,19 @@ public enum KnownRecipe implements Recipe {
                     .onRound(1).add(KnownIngredient.SOPOPHORA_BEAN, KnownIngredient.SOPOPHORA_BEAN)
                     .onRound(2).add(KnownIngredient.SOPOPHORA_BEAN, KnownIngredient.SNAKE_EYE)
                     .onRound(4).finish())
-            .finish());
+            .finish()),
+
+    LIBERATION_POTION(ComplexRecipe.named("Освобождающее зелье")
+                .with(SimpleRecipe.forVerb(Verb.RESTORE)
+                        .onRound(1).add(KnownIngredient.BAT_SPLEEN,KnownIngredient.SPOONWING)
+                        .onRound(2).add(KnownIngredient.POND_TURTLE_TAIL.toFire())
+                        .onRound(3).add(KnownIngredient.BAT_SPLEEN)
+                        .onRound(4).add(KnownIngredient.SPOONWING, KnownIngredient.POND_TURTLE_TAIL.toFire())
+                        .onRound(6).add(KnownIngredient.FAIRY_WINGS)
+                        .onRound(6).add(KnownIngredient.PINE_BUD)
+                        .onRound(7).addTwo(KnownIngredient.MANDRAKE_ROOT)
+                        .onRound(10).finish())
+                .finish());
 
     private final Recipe recipe;
 
