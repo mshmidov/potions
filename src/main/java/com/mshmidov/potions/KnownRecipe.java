@@ -96,7 +96,21 @@ public enum KnownRecipe implements Recipe {
                         .onRound(6).add(KnownIngredient.PINE_BUD)
                         .onRound(7).addTwo(KnownIngredient.MANDRAKE_ROOT)
                         .onRound(10).finish())
-                .finish());
+                .finish()),
+
+    FORGETFULNESS_POTION(ComplexRecipe.named("Зелье забывчивости")
+            .with(SimpleRecipe.forVerb(Verb.DAMAGE)
+                    .onRound(1).addTwo(KnownIngredient.PEPPERMINT_LEAVES)
+                    .onRound(3).add(KnownIngredient.COMMON_MUGWORT_LEAVES)
+                    .onRound(5).add(KnownIngredient.PEPPERMINT_LEAVES)
+                    .onRound(7).add(KnownIngredient.COMMON_MUGWORT_LEAVES)
+                    .onRound(8).add(KnownIngredient.RUNESPOOR_EGG, KnownIngredient.MOONSTONE)
+                    .onRound(13).finish())
+            .with(SimpleRecipe.forVerb(Verb.BIND)
+                    .onRound(1).addTwo(KnownIngredient.PINE_BUD)
+                    .onRound(2).add(KnownIngredient.KNOTWEED_LEAVES)
+                    .onRound(4).finish())
+            .finish());
 
     private final Recipe recipe;
 

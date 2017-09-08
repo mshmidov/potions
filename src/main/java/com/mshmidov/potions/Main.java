@@ -2,8 +2,8 @@ package com.mshmidov.potions;
 
 import com.mshmidov.potions.output.PotionText;
 import com.mshmidov.potions.output.RecipeText;
-import com.mshmidov.potions.potion.Brewable;
 import com.mshmidov.potions.potion.Potion;
+import com.mshmidov.potions.potion.Recipe;
 
 import static java.util.stream.Collectors.joining;
 
@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final Brewable recipe = KnownRecipe.VIGOR_POTION;
+        final Recipe recipe = KnownRecipe.FORGETFULNESS_POTION;
 
         printRecipe(recipe.brew());
     }

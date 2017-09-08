@@ -34,6 +34,7 @@ public enum KnownIngredient implements Ingredient {
 
     KNOTWEED_LEAVES(IngredientDefinition.ofWater("Листья горца")
             .containing(Substance.TININESS, 2)
+            .containing(Substance.FORGETFULNESS, 1)
             .build()),
 
     LAVENDER_FLOWERS(IngredientDefinition.ofWater("Цветки лаванды")
@@ -218,7 +219,7 @@ public enum KnownIngredient implements Ingredient {
             .build()),
 
     MOONSTONE(IngredientDefinition.ofEarth("Лунный камень")
-            .containing(Substance.CLARITY, 3)
+            .containing(Substance.CLARITY, 2)
             .containing(Substance.BEAUTY, 1)
             .build()),
 
@@ -266,6 +267,12 @@ public enum KnownIngredient implements Ingredient {
     PINE_BUD(IngredientDefinition.ofWater("Сосновая почка")
             .containing(Substance.AGE, 2)
             .containing(Substance.BULK, 1)
+            .build()),
+
+    RUNESPOOR_EGG(IngredientDefinition.ofFire("Яйцо рунспура")
+            .containing(Substance.MEMORY, 5)
+            .containing(Substance.RATIONALITY, 3)
+            .containing(Substance.INTELLECT, 1)
             .build())
     ;
 
