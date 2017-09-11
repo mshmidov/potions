@@ -87,16 +87,16 @@ public enum KnownRecipe implements Recipe {
             .finish()),
 
     LIBERATION_POTION(ComplexRecipe.named("Освобождающее зелье")
-                .with(SimpleRecipe.forVerb(Verb.RESTORE)
-                        .onRound(1).add(KnownIngredient.BAT_SPLEEN,KnownIngredient.SPOONWING)
-                        .onRound(2).add(KnownIngredient.POND_TURTLE_TAIL.toFire())
-                        .onRound(3).add(KnownIngredient.BAT_SPLEEN)
-                        .onRound(4).add(KnownIngredient.SPOONWING, KnownIngredient.POND_TURTLE_TAIL.toFire())
-                        .onRound(6).add(KnownIngredient.FAIRY_WINGS)
-                        .onRound(6).add(KnownIngredient.PINE_BUD)
-                        .onRound(7).addTwo(KnownIngredient.MANDRAKE_ROOT)
-                        .onRound(10).finish())
-                .finish()),
+            .with(SimpleRecipe.forVerb(Verb.RESTORE)
+                    .onRound(1).add(KnownIngredient.BAT_SPLEEN, KnownIngredient.SPOONWING)
+                    .onRound(2).add(KnownIngredient.POND_TURTLE_TAIL.toFire())
+                    .onRound(3).add(KnownIngredient.BAT_SPLEEN)
+                    .onRound(4).add(KnownIngredient.SPOONWING, KnownIngredient.POND_TURTLE_TAIL.toFire())
+                    .onRound(6).add(KnownIngredient.FAIRY_WINGS)
+                    .onRound(6).add(KnownIngredient.PINE_BUD)
+                    .onRound(7).addTwo(KnownIngredient.MANDRAKE_ROOT)
+                    .onRound(10).finish())
+            .finish()),
 
     FORGETFULNESS_POTION(ComplexRecipe.named("Зелье забывчивости")
             .with(SimpleRecipe.forVerb(Verb.DAMAGE)
@@ -109,6 +109,40 @@ public enum KnownRecipe implements Recipe {
             .with(SimpleRecipe.forVerb(Verb.BIND)
                     .onRound(1).addTwo(KnownIngredient.PINE_BUD)
                     .onRound(2).add(KnownIngredient.KNOTWEED_LEAVES)
+                    .onRound(4).finish())
+            .finish()),
+
+    MEMORY_RESTORATION_POTION(ComplexRecipe.named("Зелье восстановления памяти")
+            .with(SimpleRecipe.forVerb(Verb.RESTORE)
+                    .onRound(1).addTwo(KnownIngredient.PEPPERMINT_LEAVES)
+                    .onRound(3).add(KnownIngredient.COMMON_MUGWORT_LEAVES.toFire())
+                    .onRound(5).add(KnownIngredient.PEPPERMINT_LEAVES.toFire())
+                    .onRound(7).add(KnownIngredient.COMMON_MUGWORT_LEAVES.toFire())
+                    .onRound(8).add(KnownIngredient.RUNESPOOR_EGG, KnownIngredient.SAGE_LEAF)
+                    .onRound(13).finish())
+            .finish()),
+
+    AMORTENTIA(ComplexRecipe.named("Амортенция")
+            .with(SimpleRecipe.forVerb(Verb.INDUCE)
+                    .onRound(1).addTwo(KnownIngredient.BLACK_HELLEBORE_LEAVES)
+                    .onRound(2).addTwo(KnownIngredient.NIGHTSHADE_BERRY)
+                    .onRound(7).addTwo(KnownIngredient.WHITE_ASPHODELUS_FLOWERS)
+                    .onRound(9).addTwo(KnownIngredient.LOVAGE_FLOWERS)
+                    .onRound(11).addTwo(KnownIngredient.BLACK_HELLEBORE_LEAVES)
+                    .onRound(12).addTwo(KnownIngredient.NIGHTSHADE_BERRY)
+                    .onRound(17).finish())
+            .with(SimpleRecipe.forVerb(Verb.DECREASE)
+                    .onRound(1).addTwo(KnownIngredient.HORNED_LIZARD_BLOOD)
+                    .onRound(3).addTwo(KnownIngredient.FLIXWEED_SEEDS.toWater())
+                    .onRound(4).finish())
+            .with(SimpleRecipe.forVerb(Verb.INCREASE)
+                    .onRound(1).add(KnownIngredient.KNOTWEED_LEAVES)
+                    .onRound(3).add(KnownIngredient.SNAKE_EYE)
+                    .onRound(5).add(KnownIngredient.BICORN_HORN_POWDER)
+                    .onRound(7).finish())
+            .with(SimpleRecipe.forVerb(Verb.BIND)
+                    .onRound(1).add(KnownIngredient.LOVAGE_FLOWERS)
+                    .onRound(3).add(KnownIngredient.EELS_EYES, KnownIngredient.LAVENDER_FLOWERS)
                     .onRound(4).finish())
             .finish());
 
@@ -126,6 +160,11 @@ public enum KnownRecipe implements Recipe {
     @Override
     public Potion brew() {
         return recipe.brew();
+    }
+
+    @Override
+    public Multiset<Verb> getAllVerbs() {
+        return recipe.getAllVerbs();
     }
 
     @Override

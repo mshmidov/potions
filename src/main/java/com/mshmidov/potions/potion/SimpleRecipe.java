@@ -46,6 +46,11 @@ public class SimpleRecipe implements Recipe {
         return verb;
     }
 
+    @Override
+    public Multiset<Verb> getAllVerbs() {
+        return ImmutableMultiset.of(verb);
+    }
+
     public List<Ingredient> getIngredients(int round) {
         checkArgument(round < finalRound, "SimpleRecipe ends on round %s", finalRound);
 

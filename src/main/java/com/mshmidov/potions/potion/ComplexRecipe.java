@@ -7,6 +7,7 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.Multiset;
+import com.mshmidov.potions.definition.Verb;
 import com.mshmidov.potions.ingredent.Ingredient;
 import com.mshmidov.potions.output.ComplexRecipeText;
 import com.mshmidov.potions.output.RecipeText;
@@ -51,6 +52,15 @@ public final class ComplexRecipe implements Recipe {
     }
 
     @Override
+    public Multiset<Verb> getAllVerbs() {
+        final ImmutableMultiset.Builder<Verb> result = ImmutableMultiset.<Verb>builder();
+
+        recipes.forEach(recipe ->  result.add(recipe.getVerb()));
+
+        return result.build();
+    }
+
+    @Override
     public Multiset<Ingredient> getAllIngredients() {
         final ImmutableMultiset.Builder<Ingredient> result = ImmutableMultiset.<Ingredient> builder();
 
@@ -84,4 +94,6 @@ public final class ComplexRecipe implements Recipe {
         }
 
     }
+
+
 }
