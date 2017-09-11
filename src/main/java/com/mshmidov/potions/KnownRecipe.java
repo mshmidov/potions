@@ -16,7 +16,7 @@ public enum KnownRecipe implements Recipe {
             .named("Сонное зелье")
             .onRound(1).add(KnownIngredient.EELS_EYES, KnownIngredient.EELS_EYES)
             .onRound(3).add(KnownIngredient.LAVENDER_FLOWERS)
-            .onRound(4).add(KnownIngredient.VALERIAN_SPRIGS)
+            .onRound(4).add(KnownIngredient.VALERIAN_ROOT)
             .onRound(6).finish()),
 
     LOVE_POTION(ComplexRecipe.named("Любовное зелье")
@@ -35,13 +35,13 @@ public enum KnownRecipe implements Recipe {
             .named("Бессонное зелье")
             .onRound(1).add(KnownIngredient.EELS_EYES, KnownIngredient.EELS_EYES)
             .onRound(3).add(KnownIngredient.LAVENDER_FLOWERS)
-            .onRound(4).add(KnownIngredient.VALERIAN_SPRIGS)
+            .onRound(4).add(KnownIngredient.VALERIAN_ROOT)
             .onRound(6).finish()),
 
     INDIFFERENCE_POTION(ComplexRecipe.named("Отворотное зелье")
             .with(SimpleRecipe.forVerb(Verb.INDUCE).named("Отворотное зелье")
-                    .onRound(1).add(KnownIngredient.VALERIAN_SPRIGS, KnownIngredient.VALERIAN_SPRIGS)
-                    .onRound(3).add(KnownIngredient.EELS_EYES, KnownIngredient.VALERIAN_SPRIGS)
+                    .onRound(1).add(KnownIngredient.VALERIAN_ROOT.toWater(), KnownIngredient.VALERIAN_ROOT.toWater())
+                    .onRound(3).add(KnownIngredient.EELS_EYES, KnownIngredient.VALERIAN_ROOT.toWater())
                     .onRound(5).finish())
             .with(SimpleRecipe.forVerb(Verb.DAMAGE).named("Отворотное зелье")
                     .onRound(1).add(KnownIngredient.WHITE_ASPHODELUS_FLOWERS, KnownIngredient.WHITE_ASPHODELUS_FLOWERS)

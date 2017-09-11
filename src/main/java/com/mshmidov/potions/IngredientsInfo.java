@@ -47,6 +47,11 @@ public class IngredientsInfo {
 
         tableOutput.print(ingredientRows);
 
+        tableOutput.print(ImmutableList.of(
+                ImmutableList.of(""),
+                ImmutableList.of("Verb usages:"),
+                ImmutableList.of("-----------")));
+
         final List<List<String>> verbRows = Arrays.stream(Verb.values())
                 .map(v -> new VerbStats(v, verbUsages.count(v)))
                 .sorted(Comparator.comparing(VerbStats::getUsages).reversed())

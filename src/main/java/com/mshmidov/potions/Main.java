@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final Recipe recipe = KnownRecipe.AMORTENTIA;
+        final Recipe recipe = KnownRecipe.SLEEPLESS_DRAUGHT;
 
         printRecipe(recipe.brew());
     }

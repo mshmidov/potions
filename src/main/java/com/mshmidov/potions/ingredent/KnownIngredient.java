@@ -52,7 +52,7 @@ public enum KnownIngredient implements Ingredient {
             .containing(Substance.ALERTNESS, 1)
             .build()),
 
-    VALERIAN_SPRIGS(IngredientDefinition.ofWater("Побег валерианы")
+    VALERIAN_ROOT(IngredientDefinition.ofEarth("Корень валерианы")
             .containing(Substance.INDIFFERENCE, 2)
             .containing(Substance.SLEEPINESS, 1)
             .build()),
