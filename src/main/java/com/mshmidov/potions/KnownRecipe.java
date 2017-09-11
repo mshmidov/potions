@@ -15,7 +15,7 @@ public enum KnownRecipe implements Recipe {
     SLEEPING_DRAUGHT(SimpleRecipe.forVerb(Verb.INDUCE)
             .named("Сонное зелье")
             .onRound(1).add(KnownIngredient.EELS_EYES, KnownIngredient.EELS_EYES)
-            .onRound(3).add(KnownIngredient.LAVENDER_FLOWERS)
+            .onRound(3).add(KnownIngredient.DRIED_LAVENDER_FLOWERS)
             .onRound(4).add(KnownIngredient.VALERIAN_ROOT)
             .onRound(6).finish()),
 
@@ -27,14 +27,14 @@ public enum KnownRecipe implements Recipe {
                     .onRound(5).finish())
             .with(SimpleRecipe.forVerb(Verb.BIND)
                     .onRound(1).add(KnownIngredient.LOVAGE_FLOWERS)
-                    .onRound(3).add(KnownIngredient.EELS_EYES, KnownIngredient.LAVENDER_FLOWERS)
+                    .onRound(3).add(KnownIngredient.EELS_EYES, KnownIngredient.DRIED_LAVENDER_FLOWERS)
                     .onRound(4).finish())
             .finish()),
 
     SLEEPLESS_DRAUGHT(SimpleRecipe.forVerb(Verb.DECREASE)
             .named("Бессонное зелье")
             .onRound(1).add(KnownIngredient.EELS_EYES, KnownIngredient.EELS_EYES)
-            .onRound(3).add(KnownIngredient.LAVENDER_FLOWERS.toWater())
+            .onRound(3).add(KnownIngredient.DRIED_LAVENDER_FLOWERS.toWater())
             .onRound(4).add(KnownIngredient.VALERIAN_ROOT)
             .onRound(6).finish()),
 
@@ -142,8 +142,16 @@ public enum KnownRecipe implements Recipe {
                     .onRound(7).finish())
             .with(SimpleRecipe.forVerb(Verb.BIND)
                     .onRound(1).add(KnownIngredient.LOVAGE_FLOWERS)
-                    .onRound(3).add(KnownIngredient.EELS_EYES, KnownIngredient.LAVENDER_FLOWERS)
+                    .onRound(3).add(KnownIngredient.EELS_EYES, KnownIngredient.DRIED_LAVENDER_FLOWERS)
                     .onRound(4).finish())
+            .finish()),
+
+    CALMING_DRAUGHT(ComplexRecipe.named("Успокаивающее зелье")
+            .with(SimpleRecipe.forVerb(Verb.INDUCE)
+                    .onRound(1).addTwo(KnownIngredient.FLY_AMANITA.toFire())
+                    .onRound(5).add(KnownIngredient.DRIED_LAVENDER_FLOWERS)
+                    .onRound(6).add(KnownIngredient.FLY_AMANITA.toFire())
+                    .onRound(12).finish())
             .finish());
 
     private final Recipe recipe;

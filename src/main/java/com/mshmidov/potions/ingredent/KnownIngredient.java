@@ -37,7 +37,7 @@ public enum KnownIngredient implements Ingredient {
             .containing(Substance.FORGETFULNESS, 1)
             .build()),
 
-    LAVENDER_FLOWERS(IngredientDefinition.ofEarth("Сушеные цветки лаванды")
+    DRIED_LAVENDER_FLOWERS(IngredientDefinition.ofEarth("Сушеные цветки лаванды")
             .containing(Substance.SLEEPINESS, 2)
             .containing(Substance.HEALTH, 1)
             .build()),
@@ -235,8 +235,9 @@ public enum KnownIngredient implements Ingredient {
             .build()),
 
     FLY_AMANITA(IngredientDefinition.ofEarth("Красный мухомор")
-            .containing(Substance.EUPHORIA, 2)
-            .containing(Substance.CALM, 1)
+            .containing(Substance.SICKNESS, 5)
+            .containing(Substance.CALM, 3)
+            .containing(Substance.EUPHORIA, 1)
             .build()),
 
     HOLLY_BERRY(IngredientDefinition.ofFire("Ягоды остролиста")
