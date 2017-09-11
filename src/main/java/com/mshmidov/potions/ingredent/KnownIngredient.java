@@ -37,7 +37,7 @@ public enum KnownIngredient implements Ingredient {
             .containing(Substance.FORGETFULNESS, 1)
             .build()),
 
-    LAVENDER_FLOWERS(IngredientDefinition.ofWater("Цветки лаванды")
+    LAVENDER_FLOWERS(IngredientDefinition.ofEarth("Сушеные цветки лаванды")
             .containing(Substance.SLEEPINESS, 2)
             .containing(Substance.HEALTH, 1)
             .build()),

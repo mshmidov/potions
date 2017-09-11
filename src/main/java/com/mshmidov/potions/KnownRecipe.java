@@ -34,7 +34,7 @@ public enum KnownRecipe implements Recipe {
     SLEEPLESS_DRAUGHT(SimpleRecipe.forVerb(Verb.DECREASE)
             .named("Бессонное зелье")
             .onRound(1).add(KnownIngredient.EELS_EYES, KnownIngredient.EELS_EYES)
-            .onRound(3).add(KnownIngredient.LAVENDER_FLOWERS)
+            .onRound(3).add(KnownIngredient.LAVENDER_FLOWERS.toWater())
             .onRound(4).add(KnownIngredient.VALERIAN_ROOT)
             .onRound(6).finish()),
 
