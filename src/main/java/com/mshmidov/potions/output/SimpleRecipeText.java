@@ -12,6 +12,7 @@ import com.mshmidov.potions.potion.SimpleRecipe;
 import org.apache.commons.lang3.StringUtils;
 
 import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.removeEnd;
 
 public final class SimpleRecipeText implements RecipeText {
 
@@ -58,7 +59,7 @@ public final class SimpleRecipeText implements RecipeText {
                     recipe.getVerb().isAeration() ? "бурно перемешать" : "перемешать") + ".";
 
             if (result.getLast().toLowerCase().endsWith(roundFinish)) {
-                final String numeralPrefix = StringUtils.removeEnd(result.getLast().toLowerCase(), roundFinish).trim();
+                final String numeralPrefix = removeEnd(removeEnd(result.getLast().toLowerCase(), roundFinish).trim(), ":");
                 final int numeral = parseNumeralPrefix(numeralPrefix);
                 result.removeLast();
                 result.add(String.format("%s: %s", getNumeralPrefix(numeral + 1), roundFinish));
@@ -99,7 +100,7 @@ public final class SimpleRecipeText implements RecipeText {
             return 3;
 
         } else if (Objects.equals(prefix, "четырежды")) {
-            return 2;
+            return 4;
 
         } else if (prefix.endsWith(" раз")) {
             return Integer.parseInt(StringUtils.removeEnd(prefix, " раз"));

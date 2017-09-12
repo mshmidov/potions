@@ -159,7 +159,7 @@ public enum KnownRecipe implements Recipe {
                     .onRound(1).addTwo(KnownIngredient.RUNESPOOR_EGG)
                     .onRound(3).add(KnownIngredient.SAGE_LEAF, KnownIngredient.COMMON_MUGWORT_LEAVES)
                     .onRound(6).addTwo(KnownIngredient.SNAKE_EYE)
-                    .onRound(12).finish())
+                    .onRound(8).finish())
             .with(SimpleRecipe.forVerb(Verb.INCREASE)
                     .onRound(1).addTwo(KnownIngredient.SAGE_LEAF)
                     .onRound(3).add(KnownIngredient.DRIED_SCARAB)
