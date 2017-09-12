@@ -4,6 +4,7 @@ import com.google.common.collect.Table;
 import com.mshmidov.potions.definition.Substance;
 import com.mshmidov.potions.definition.Verb;
 import com.mshmidov.potions.output.PotionText;
+import com.mshmidov.potions.process.log.BrewingLog;
 
 public interface Potion {
 
@@ -17,4 +18,5 @@ public interface Potion {
 
     PotionText asText();
 
+    BrewingLog getLog();
 }

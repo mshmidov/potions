@@ -8,6 +8,10 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.mshmidov.potions.definition.Substance;
 import com.mshmidov.potions.ingredent.AddedIngredient;
+import com.mshmidov.potions.process.log.BrewingLog;
+import com.mshmidov.potions.process.log.CauldronState;
+import com.mshmidov.potions.process.log.Extraction;
+import com.mshmidov.potions.process.log.Neutralization;
 
 import static java.util.stream.Collectors.joining;
 
@@ -18,7 +22,6 @@ public class Cauldron {
 
     public void addIngredient(AddedIngredient ingredient) {
         ingredients.add(ingredient);
-        System.out.println("Added " + ingredient);
     }
 
     public boolean contains(Substance substance) {
@@ -38,8 +41,6 @@ public class Cauldron {
             final int quantity = substances.remove(substance);
             if (quantity > 0) {
                 substances.put(substance.getOpposite(), quantity);
-                System.out.println(
-                        String.format("%1$s %3$s in solution transmuted into %2$s %3$s", substance, substance.getOpposite(), quantity));
             }
         }
     }
@@ -48,19 +49,25 @@ public class Cauldron {
         substances.remove(substance);
     }
 
-    public void performExtraction() {
+    public BrewingLog performExtraction() {
+        final BrewingLog log = new BrewingLog();
+
         ingredients.stream()
                 .map(AddedIngredient::extractSubstances)
                 .forEach(ingredient -> ingredient.forEach((substance, quantity) -> {
                     substances.merge(substance, quantity, (a, b) -> a + b);
-                    System.out.println(String.format("Extracted %s %s", substance, quantity));
+                    log.add(new Extraction(substance, quantity));
                 }));
+
+        return log;
     }
 
-    public void neutralizeOpposites() {
+    public BrewingLog neutralizeOpposites() {
+        final BrewingLog log = new BrewingLog();
+
         Substance.OPPOSITES.entrySet().stream()
                 .filter(pair -> substances.containsKey(pair.getKey()) && substances.containsKey(pair.getValue()))
-                .forEach(pair -> {
+                .map(pair -> {
                     final Substance substanceA = pair.getKey();
                     final Substance substanceB = pair.getValue();
 
@@ -71,19 +78,26 @@ public class Cauldron {
                         substances.put(substanceA, quantityA - quantityB);
                         substances.remove(substanceB);
 
-                        System.out.println(String.format("%1$s %3$s neutralized %2$s %3$s", substanceA, substanceB, quantityB));
+                        return new Neutralization(substanceA, substanceB, quantityB);
 
                     } else if (quantityA < quantityB) {
                         substances.remove(substanceA);
                         substances.put(substanceB, quantityB - quantityA);
-                        System.out.println(String.format("%1$s %3$s neutralized %2$s %3$s", substanceA, substanceB, quantityA));
+                        return new Neutralization(substanceA, substanceB, quantityA);
                     } else {
                         substances.remove(substanceA);
                         substances.remove(substanceB);
-                        System.out.println(String.format("%1$s %3$s neutralized %2$s %3$s", substanceA, substanceB, quantityA));
+                        return new Neutralization(substanceA, substanceB, quantityA);
                     }
 
-                });
+                })
+                .forEach(log::add);
+
+        return log;
+    }
+
+    public CauldronState getState() {
+        return new CauldronState(ingredients, substances);
     }
 
     @Override

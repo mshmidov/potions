@@ -4,6 +4,7 @@ import com.google.common.collect.Table;
 import com.mshmidov.potions.definition.Substance;
 import com.mshmidov.potions.definition.Verb;
 import com.mshmidov.potions.output.PotionText;
+import com.mshmidov.potions.process.log.BrewingLog;
 
 final class ComplexPotion implements Potion {
 
@@ -39,5 +40,10 @@ final class ComplexPotion implements Potion {
     @Override
     public PotionText asText() {
         return new PotionText(this);
+    }
+
+    @Override
+    public BrewingLog getLog() {
+        return finalPotion.getLog();
     }
 }

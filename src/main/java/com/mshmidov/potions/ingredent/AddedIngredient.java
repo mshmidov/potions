@@ -23,6 +23,16 @@ public class AddedIngredient {
         this.substances.putAll(ingredient.getSubstances());
     }
 
+    AddedIngredient(AddedIngredient ingredient) {
+        this.name = ingredient.getName();
+        this.element = ingredient.getElement();
+        this.substances.putAll(ingredient.getSubstances());
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public Element getElement() {
         return element;
     }
@@ -36,8 +46,6 @@ public class AddedIngredient {
             final int quantity = substances.remove(substance);
             if (quantity > 0) {
                 substances.put(substance.getOpposite(), quantity);
-                System.out.println(String.format("%1$s %3$s in added ingredient transmuted into %2$s %3$s", substance,
-                        substance.getOpposite(), quantity));
             }
         }
     }
@@ -60,6 +68,10 @@ public class AddedIngredient {
         });
 
         return result;
+    }
+
+    public AddedIngredient mutableCopy() {
+        return new AddedIngredient(this);
     }
 
     @Override

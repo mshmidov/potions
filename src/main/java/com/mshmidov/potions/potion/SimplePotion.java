@@ -15,6 +15,10 @@ import com.mshmidov.potions.definition.Rules;
 import com.mshmidov.potions.definition.Substance;
 import com.mshmidov.potions.definition.Verb;
 import com.mshmidov.potions.output.PotionText;
+import com.mshmidov.potions.process.log.BrewingLog;
+import com.mshmidov.potions.process.log.NewSimplePotion;
+import com.mshmidov.potions.process.log.Synthesis;
+import com.mshmidov.potions.process.log.TooMuchEffects;
 
 import static java.util.stream.Collectors.joining;
 import static org.apache.commons.lang3.StringUtils.capitalize;
@@ -27,7 +31,14 @@ public final class SimplePotion implements Potion {
 
     private final Table<Verb, Substance, Integer> sideEffects;
 
-    public static SimplePotion create(SimpleRecipe recipe, Optional<SimplePotion> base, Map<Substance, Integer> substances) {
+    private final BrewingLog brewingLog;
+
+    public static SimplePotion create(SimpleRecipe recipe, Optional<SimplePotion> base, Map<Substance, Integer> substances,
+            BrewingLog brewingLog) {
+
+        final BrewingLog log = new BrewingLog();
+        base.map(Potion::getLog).ifPresent(log::addAll);
+        log.addAll(brewingLog);
 
         final Table<Verb, Substance, Integer> effects = HashBasedTable.create();
         final Table<Verb, Substance, Integer> sideEffects = HashBasedTable.create();
@@ -60,24 +71,27 @@ public final class SimplePotion implements Potion {
         base.map(SimplePotion::getEffects).ifPresent(effects::putAll);
         base.map(SimplePotion::getSideEffects).ifPresent(sideEffects::putAll);
 
-        performSynthesis(effects, Substance.THIRD_ORDER, Rules.SYNTHESIS_FOURTH_ORDER_COUNT);
-        performSynthesis(effects, Substance.SECOND_ORDER, Rules.SYNTHESIS_THIRD_ORDER_COUNT);
-        performSynthesis(effects, Substance.FIRST_ORDER, Rules.SYNTHESIS_SECOND_ORDER_COUNT);
+       log.addAll(performSynthesis(effects, Substance.THIRD_ORDER, Rules.SYNTHESIS_FOURTH_ORDER_COUNT));
+       log.addAll(performSynthesis(effects, Substance.SECOND_ORDER, Rules.SYNTHESIS_THIRD_ORDER_COUNT));
+       log.addAll(performSynthesis(effects, Substance.FIRST_ORDER, Rules.SYNTHESIS_SECOND_ORDER_COUNT));
 
         if ((effects.size() - base.map(SimplePotion::getEffects).map(Table::size).orElse(0)) > Rules.MAX_EFFECTS) {
             sideEffects.putAll(effects);
             effects.clear();
-
-            System.out.printf("too much effects in potion; everything is converted to side effects%n");
+            log.add(new TooMuchEffects());
         }
 
-        return new SimplePotion(recipe, effects, sideEffects);
+        log.add(new NewSimplePotion(effects, sideEffects));
+
+        return new SimplePotion(recipe, effects, sideEffects, log);
     }
 
-    private static void performSynthesis(
+    private static BrewingLog performSynthesis(
             Table<Verb, Substance, Integer> effects,
             SetMultimap<Substance, Substance> higherOrder,
             int synthesisTreshold) {
+
+        final BrewingLog log = new BrewingLog();
 
         effects.rowKeySet().forEach(verb -> {
 
@@ -92,18 +106,27 @@ public final class SimplePotion implements Potion {
                             .map(s -> effects.remove(verb, s))
                             .min(Integer::compareTo).orElse(0);
 
-                    effects.put(verb, higherSubstance, minimalQuantity + Optional.ofNullable(effects.get(verb, higherSubstance)).orElse(0));
-                    System.out.println("Synthesis of " + lowerSubstances + " into " + higherSubstance);
+                    final int quantity = minimalQuantity + Optional.ofNullable(effects.get(verb, higherSubstance)).orElse(0);
+                    effects.put(verb, higherSubstance, quantity);
+
+                    log.add(new Synthesis(lowerSubstances, higherSubstance, quantity));
                 }
 
             });
         });
+
+        return log;
     }
 
-    private SimplePotion(SimpleRecipe recipe, Table<Verb, Substance, Integer> effects, Table<Verb, Substance, Integer> sideEffects) {
+    private SimplePotion(SimpleRecipe recipe,
+            Table<Verb, Substance, Integer> effects,
+            Table<Verb, Substance, Integer> sideEffects,
+            BrewingLog brewingLog) {
+
         this.recipe = recipe;
         this.effects = ImmutableTable.copyOf(effects);
         this.sideEffects = ImmutableTable.copyOf(sideEffects);
+        this.brewingLog = brewingLog;
     }
 
     @Override
@@ -124,6 +147,11 @@ public final class SimplePotion implements Potion {
     @Override
     public Table<Verb, Substance, Integer> getSideEffects() {
         return sideEffects;
+    }
+
+    @Override
+    public BrewingLog getLog() {
+        return brewingLog;
     }
 
     @Override

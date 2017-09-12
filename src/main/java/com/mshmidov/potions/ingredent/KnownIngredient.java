@@ -318,4 +318,8 @@ public enum KnownIngredient implements Ingredient {
         return definition.mutableCopy();
     }
 
+    @Override
+    public String toString() {
+        return definition.toString();
+    }
 }

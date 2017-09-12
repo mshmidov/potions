@@ -4,6 +4,7 @@ import com.mshmidov.potions.output.PotionText;
 import com.mshmidov.potions.output.RecipeText;
 import com.mshmidov.potions.potion.Potion;
 import com.mshmidov.potions.potion.Recipe;
+import com.mshmidov.potions.process.log.BrewingLog;
 
 import static java.util.stream.Collectors.joining;
 
@@ -13,12 +14,20 @@ public class Main {
 
         final Recipe recipe = KnownRecipe.DRAUGHT_OF_BRIGHT_MIND;
 
-        printRecipe(recipe.brew());
+        final Potion potion = recipe.brew();
+
+        printLog(potion.getLog());
+        System.out.println();
+        printRecipe(potion);
+    }
+
+    private static void printLog(BrewingLog log) {
+        log.forEach(e -> System.out.println(e.toString()));
+
     }
 
     private static void printRecipe(final Potion potion) {
         final PotionText potionText = potion.asText();
-        System.out.println();
         System.out.println(potionText.getName());
         System.out.print("Эффекты: ");
         System.out.println(potionText.getEffects().stream().collect(joining("; ")));
