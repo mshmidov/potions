@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final Recipe recipe = KnownRecipe.CALMING_DRAUGHT;
+        final Recipe recipe = KnownRecipe.DRAUGHT_OF_BRIGHT_MIND;
 
         printRecipe(recipe.brew());
     }

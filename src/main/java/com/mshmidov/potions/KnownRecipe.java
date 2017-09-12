@@ -152,6 +152,19 @@ public enum KnownRecipe implements Recipe {
                     .onRound(5).add(KnownIngredient.DRIED_LAVENDER_FLOWERS)
                     .onRound(6).add(KnownIngredient.FLY_AMANITA.toFire())
                     .onRound(12).finish())
+            .finish()),
+
+    DRAUGHT_OF_BRIGHT_MIND(ComplexRecipe.named("Напиток ясного ума")
+            .with(SimpleRecipe.forVerb(Verb.INCREASE)
+                    .onRound(1).addTwo(KnownIngredient.RUNESPOOR_EGG)
+                    .onRound(3).add(KnownIngredient.SAGE_LEAF, KnownIngredient.COMMON_MUGWORT_LEAVES)
+                    .onRound(6).addTwo(KnownIngredient.SNAKE_EYE)
+                    .onRound(12).finish())
+            .with(SimpleRecipe.forVerb(Verb.INCREASE)
+                    .onRound(1).addTwo(KnownIngredient.SAGE_LEAF)
+                    .onRound(3).add(KnownIngredient.DRIED_SCARAB)
+                    .onRound(4).add(KnownIngredient.LIONFISH_RAY)
+                    .onRound(5).finish())
             .finish());
 
     private final Recipe recipe;
